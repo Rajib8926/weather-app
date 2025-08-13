@@ -36,7 +36,7 @@ export default function Home() {
               marginTop: "5px",
             }}
           >
-            Check out today's weather information
+            {"Check out today's weather information"}
           </Typography>
           <Box
             sx={{
@@ -68,7 +68,7 @@ export default function Home() {
             </Box>
           </Box>
           <Box sx={{ width: "100%", marginTop: "20px" }}>
-            <Typography>More details of today's weather</Typography>
+            <Typography>{"More details of today's weather"}</Typography>
           </Box>
         </Box>
       </Box>

@@ -105,7 +105,7 @@ export default function WeatherInfo({
           marginTop: "5px",
         }}
       >
-        Check out today's weather information
+        {"Check out today's weather information"}
       </Typography>
       <Box
         sx={{
@@ -176,7 +176,7 @@ export default function WeatherInfo({
         }}
       >
         <Typography sx={{ fontSize: { lg: "17px", xs: "15px" } }}>
-          More details of today's weather
+         {" More details of today's weather"}
         </Typography>
         <Grid
           container

@@ -9,7 +9,7 @@ import {
   getCurrentWeather,
   timeCalculate,
 } from "../functions/getCurrentWeather";
-import { WeatherForecastResponse } from "../type";
+import { WeatherForecastResponse, WeatherHourDataType } from "../type";
 import { getWeatherIcons } from "../functions/weatherIcon";
 import { FiChevronRight } from "react-icons/fi";
 import SearchComponent from "./SearchComponent";
@@ -21,7 +21,7 @@ export default function CurrentWeather({
   setHourlyForecast,
 }: {
   setWeatherReport: Dispatch<SetStateAction<WeatherForecastResponse | null>>;
-  setHourlyForecast: any;
+  setHourlyForecast: Dispatch<SetStateAction<WeatherHourDataType[] | null>>;
 }) {
   const [addedLocatons, setAddedLocation] = useState<
     { lat: number; lon: number }[]
@@ -79,7 +79,7 @@ export default function CurrentWeather({
           date: dateCalculate(data?.location.localtime),
         });
         console.log(data);
-        function getNext24HoursForecast(forecastData: any): any[] {
+        function getNext24HoursForecast(forecastData: WeatherForecastResponse) {
           const currentEpoch = forecastData.current.last_updated_epoch;
           const currentHour = new Date(currentEpoch * 1000).getHours();
 
@@ -96,12 +96,14 @@ export default function CurrentWeather({
           );
 
           // Get next 24 hours from current time
-          setHourlyForecast(allHours.slice(startIndex, startIndex + 24));
+          setHourlyForecast(
+            allHours.slice(startIndex, startIndex + 24) as WeatherHourDataType[]
+          );
           console.log(allHours.slice(startIndex, startIndex + 24));
 
           return allHours.slice(startIndex, startIndex + 24);
         }
-        getNext24HoursForecast(data as any);
+        getNext24HoursForecast(data as WeatherForecastResponse);
       });
     },
     [currentLocationIndex, addedLocatons]
@@ -261,7 +263,7 @@ export default function CurrentWeather({
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  gap: { lg: "3rem", md: "2rem",xs:"3rem" },
+                  gap: { lg: "3rem", md: "2rem", xs: "3rem" },
                 }}
               >
                 <Box

@@ -1,19 +1,6 @@
 "use client";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import LineChart from "./components/TempChart";
-import Speedometer from "./components/Speedomiter";
-import Humidity from "./components/Humidity";
-import UVIndex from "./components/UVIndex";
-import FeelsLike from "./components/FeelsLike";
-import AirQuality from "./components/AirQuality";
-import ChancesOfRain from "./components/ChancesOfRain";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import AirIcon from "@mui/icons-material/Air";
-import SunnyIcon from "@mui/icons-material/Sunny";
-import ThermostatIcon from "@mui/icons-material/Thermostat";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import MasksIcon from "@mui/icons-material/Masks";
+import { Box } from "@mui/material";
+
 import CurrentWeather from "./components/CurrentWeather";
 import { useState } from "react";
 import { WeatherForecastResponse, WeatherHourDataType } from "./type";
