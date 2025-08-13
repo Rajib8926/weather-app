@@ -1,0 +1,40 @@
+/ weather-app/weather-app/app/page.module.css
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #252525;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #252525;
+  margin-top: 0.5rem;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 300px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  padding: 10px 50px;
+  margin-top: 25px;
+  flex-direction: column;
+}
+
+.details {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #252525;
+}

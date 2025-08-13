@@ -1,95 +1,447 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
+"use client";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import LineChart from "./components/TempChart";
+import Speedometer from "./components/Speedomiter";
+import Humidity from "./components/Humidity";
+import UVIndex from "./components/UVIndex";
+import FeelsLike from "./components/FeelsLike";
+import AirQuality from "./components/AirQuality";
+import ChancesOfRain from "./components/ChancesOfRain";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import AirIcon from "@mui/icons-material/Air";
+import SunnyIcon from "@mui/icons-material/Sunny";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
+import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import MasksIcon from "@mui/icons-material/Masks";
+import CurrentWeather from "./components/CurrentWeather";
+import { useState } from "react";
+import { WeatherForecastResponse, WeatherHourDataType } from "./type";
+import "react-spring-bottom-sheet/dist/style.css";
+import WeatherInfo from "./components/WeatherInfo";
+import WeatherInfoDrawer from "./components/WeatherInfoDrawer";
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [weatherReport, setWeatherReport] =
+    useState<WeatherForecastResponse | null>(null);
+  const [forecastRange, setForecastRange] = useState({ start: 0, end: 8 });
+  const [hourlyForecast, setHourlyForecast] = useState<
+    WeatherHourDataType[] | null
+  >(null);
+  const gridItemStyle = {
+    background: "white",
+    justifyItems: "center",
+    borderRadius: { md: "30px", xs: "20px" },
+    alignContent: "center",
+    padding: "20px 30px",
+    // backdropFilter: "blur(15px)",
+  };
+  const weatherIconConStyle = {
+    width: "30px",
+    height: "25px",
+    backgroundColor: "primary.main",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "5px",
+  };
+  function forecastRangeHandler(type: "next" | "previous") {
+    if (type === "next") {
+      if (forecastRange.end < 24) {
+        setForecastRange({
+          start: forecastRange.start + 8,
+          end: forecastRange.end + 8,
+        });
+      }
+    } else if (type === "previous") {
+      if (forecastRange.start > 0) {
+        setForecastRange({
+          start: forecastRange.start - 8,
+          end: forecastRange.end - 8,
+        });
+      }
+    }
+  }
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+          background: "#5bc6ff",
+        }}
+      >
+        {" "}
+      </Box>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 8,
+          height: "100%",
+          display: "flex",
+        }}
+      >
+        <Box
+          sx={{
+            height: "100%",
+            flex: "1",
+            padding: {
+              lg: "20px 40px",
+              md: "20px 30px",
+              sm: "20px 50px",
+              xs: "20px 30px",
+            },
+            position: { md: "static", xs: "relative" },
+          }}
+        >
+          <CurrentWeather
+            setWeatherReport={setWeatherReport}
+            setHourlyForecast={setHourlyForecast}
+          />
+        </Box>
+        <Box sx={{ display: { md: "inline", xs: "none" } }}>
+          <WeatherInfo
+            weatherReport={weatherReport}
+            hourlyForecast={hourlyForecast}
+          />
+        </Box>
+        <WeatherInfoDrawer
+          weatherReport={weatherReport}
+          hourlyForecast={hourlyForecast}
+        />
+        {/* <Box
+          sx={{
+            background: "#ffffff98",
+            height: "100vh",
+            width: { xl: "75%", md: "80%", xs: "100vw" },
+            backdropFilter: "blur(2px)",
+            display: "flex",
+            flexDirection: "column",
+            padding: {
+              xl: "4rem 7rem",
+              sm: "3rem 3rem",
+              xs: "3rem 1rem 11vh",
+            },
+            borderRadius: {
+              md: "70px 0 0 70px",
+              sm: "50px 50px 0 0",
+              xs: "30px 30px 0 0",
+            },
+            overflowY: "auto",
+            position: { md: "static", xs: "absolute" },
+
+            bottom: "-70vh",
+          }}
+        >
+          <Box
+            sx={{
+              width: "50px",
+              height: "7px",
+              borderRadius: "5px",
+              background: "#42424242",
+              position: "absolute",
+              top: "11px",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          ></Box>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { lg: "25px", xs: "22px" },
+              fontWeight: "500",
+              paddingLeft: "10px",
+            }}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+            Well come to Weather Info
+          </Typography>
+
+          <Typography
+            variant="h2"
+            sx={{
+              fontSize: { lg: "15px", xs: "14px" },
+              paddingLeft: "10px",
+              fontWeight: "400",
+              marginTop: "5px",
+            }}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            Check out today's weather information
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              height: "300px",
+              borderRadius: { md: "30px", xs: "20px" },
+              background: "white",
+              display: "flex",
+              justifyContent: "center",
+              padding: { lg: "10px 50px", md: "17px 25px", xs: "18px 18px" },
+              marginTop: "25px",
+              // margin: "50px auto",
+              flexDirection: "column",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: { md: "space-between", xs: "end" },
+              }}
+            >
+              <Typography sx={{ display: { md: "inline", xs: "none" } }}>
+                Upcoming hours
+              </Typography>
+
+              <Box>
+                <Button
+                  disabled={forecastRange.start !== 0 ? false : true}
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "20px",
+                    paddingRight: "20px",
+                  }}
+                  variant="text"
+                  onClick={() => forecastRangeHandler("previous")}
+                >
+                  <ChevronRightIcon style={{ transform: " rotate(180deg)" }} />
+                  Previous{" "}
+                </Button>
+                <Button
+                  disabled={forecastRange.end !== 24 ? false : true}
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "20px",
+                    paddingLeft: "20px",
+                  }}
+                  variant="text"
+                  onClick={() => forecastRangeHandler("next")}
+                >
+                  Next <ChevronRightIcon />
+                </Button>
+              </Box>
+            </Box>
+            <Box sx={{ width: "100%", overflow: "auto" }}>
+              <Box sx={{ width: { sm: "100%", xs: "550px" }, flex: ".8" }}>
+                <LineChart
+                  hourlyForecast={hourlyForecast}
+                  forecastRange={forecastRange}
+                />
+              </Box>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              marginTop: "20px",
+            }}
+          >
+            <Typography sx={{ fontSize: { lg: "17px", xs: "15px" } }}>
+              More details of today's weather
+            </Typography>
+            <Grid
+              container
+              spacing={1.5}
+              sx={{ width: "100%", marginTop: "15px", minHeight: "400px" }}
+            >
+              <Grid size={{ lg: 4, sm: 6, xs: 12 }} sx={gridItemStyle}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography fontWeight={"500"} fontSize={"15px"}>
+                    Wind
+                  </Typography>
+                  <Box sx={weatherIconConStyle}>
+                    <AirIcon sx={{ color: "white", fontSize: "18px" }} />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    height: "130px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Speedometer
+                    windSpeed={weatherReport?.current.wind_kph as number}
+                  />
+                </Box>
+              </Grid>
+              <Grid size={{ lg: 4, sm: 6, xs: 12 }} sx={gridItemStyle}>
+                {" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography fontWeight={"500"} fontSize={"15px"}>
+                    Humidity
+                  </Typography>
+                  <Box sx={weatherIconConStyle}>
+                    <WaterDropIcon sx={{ color: "white", fontSize: "18px" }} />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    height: "130px",
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Humidity
+                    currentHumidity={weatherReport?.current.humidity as number}
+                  />
+                </Box>
+              </Grid>
+              <Grid size={{ lg: 4, sm: 6, xs: 12 }} sx={gridItemStyle}>
+                {" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography fontWeight={"500"} fontSize={"15px"}>
+                    UV Index
+                  </Typography>
+                  <Box sx={weatherIconConStyle}>
+                    <SunnyIcon sx={{ color: "white", fontSize: "18px" }} />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    height: "130px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <UVIndex
+                    currentUvIndex={weatherReport?.current.uv as number}
+                  />
+                </Box>
+              </Grid>
+              <Grid size={{ lg: 4, sm: 6, xs: 12 }} sx={gridItemStyle}>
+                {" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography fontWeight={"500"} fontSize={"15px"}>
+                    Feels like
+                  </Typography>
+                  <Box sx={weatherIconConStyle}>
+                    <ThermostatIcon sx={{ color: "white", fontSize: "18px" }} />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    height: "130px",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FeelsLike
+                    value={weatherReport?.current.feelslike_c as number}
+                  />
+                </Box>
+              </Grid>
+              <Grid size={{ lg: 4, sm: 6, xs: 12 }} sx={gridItemStyle}>
+                {" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography fontWeight={"500"} fontSize={"15px"}>
+                    Air Quality
+                  </Typography>
+
+                  <Box sx={weatherIconConStyle}>
+                    <MasksIcon sx={{ color: "white", fontSize: "18px" }} />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    height: "130px",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AirQuality
+                    airIndex={
+                      weatherReport?.current.air_quality[
+                        "us-epa-index"
+                      ] as number
+                    }
+                  />
+                </Box>
+              </Grid>
+              <Grid size={{ lg: 4, sm: 6, xs: 12 }} sx={gridItemStyle}>
+                {" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography fontWeight={"500"} fontSize={"15px"}>
+                    Chances of rain
+                  </Typography>
+                  <Box sx={weatherIconConStyle}>
+                    <BeachAccessIcon
+                      sx={{ color: "white", fontSize: "18px" }}
+                    />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    height: "130px",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ChancesOfRain
+                    value={
+                      hourlyForecast &&
+                      hourlyForecast[0]?.chance_of_rain != null
+                        ? hourlyForecast[0].chance_of_rain
+                        : 0
+                    }
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box> */}
+      </Box>
+    </>
   );
 }

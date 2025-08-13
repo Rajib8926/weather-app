@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Roboto } from "next/font/google";
+import { ThemeProvider } from "@emotion/react";
+import muiTheme from "./theme/muiTheme";
+import ThemeRegistry from "./theme-provider";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const roboto = Roboto({
   subsets: ["latin"],
+  weight: ["400", "500", "700"], // choose the weights you need
+  variable: "--font-roboto",
 });
 
 export const metadata: Metadata = {
@@ -23,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+    <html lang="en" className={`${roboto.className}`}>
+      <body style={{ position: "relative", height: "100vh", overflow: "hidden"}}>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );
