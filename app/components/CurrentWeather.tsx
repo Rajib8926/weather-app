@@ -244,7 +244,7 @@ export default function CurrentWeather({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                marginTop: "50px",
+                marginTop: { md: "50px", sm: "30px", xs: "20px" },
               }}
             >
               <Box

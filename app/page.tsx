@@ -141,7 +141,7 @@ export default function Home() {
     [currentLocationIndex, addedLocatons]
   );
   console.log(currentWeather);
-  
+
   return (
     <>
       {currentWeather ? (
@@ -176,9 +176,10 @@ export default function Home() {
                 padding: {
                   lg: "20px 40px",
                   md: "20px 30px",
-                  sm: "20px 50px",
-                  xs: "20px 30px",
+                  sm: "10px 50px",
+                  xs: "5px 30px",
                 },
+
                 position: { md: "static", xs: "relative" },
               }}
             >
