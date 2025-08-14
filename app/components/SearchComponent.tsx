@@ -42,7 +42,7 @@ export default function SearchComponent({
     }
     try {
       const locationRes = await fetch(
-        `https://api.weatherapi.com/v1/search.json?key=${process.env.NEXT_PUBLIC_WEATHERAPI_KEY}&q=${query}`
+        `https://api.weatherapi.com/v1/search.json?key=${"f4a8cb380ebe45d1897171518251607"}&q=${query}`
       );
       const locationData = await locationRes.json();
       if (locationData !== 0) {
