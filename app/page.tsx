@@ -107,8 +107,7 @@ export default function Home() {
         setCurrentWeather(data as WeatherForecastResponse);
         setCurrentWeather(data as WeatherForecastResponse);
         setTimeAndDate({
-          time: timeCalculate(1755169259),
-          // time: timeCalculate(data?.location.localtime_epoch as number),
+          time: timeCalculate(data?.location.localtime_epoch as number),
           date: dateCalculate(data?.location.localtime),
         });
         console.log(data);
@@ -141,7 +140,8 @@ export default function Home() {
     },
     [currentLocationIndex, addedLocatons]
   );
-
+  console.log(currentWeather);
+  
   return (
     <>
       {currentWeather ? (
@@ -352,8 +352,7 @@ export default function Home() {
                       }}
                     >
                       <Speedometer
-                        windSpeed={50}
-                        // windSpeed={currentWeather?.current.wind_kph as number}
+                        windSpeed={currentWeather?.current.wind_kph as number}
                       />
                     </Box>
                   </Grid>
