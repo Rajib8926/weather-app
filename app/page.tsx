@@ -107,7 +107,8 @@ export default function Home() {
         setCurrentWeather(data as WeatherForecastResponse);
         setCurrentWeather(data as WeatherForecastResponse);
         setTimeAndDate({
-          time: timeCalculate(data?.location.localtime_epoch as number),
+          time: timeCalculate(1755169259),
+          // time: timeCalculate(data?.location.localtime_epoch as number),
           date: dateCalculate(data?.location.localtime),
         });
         console.log(data);
@@ -144,7 +145,8 @@ export default function Home() {
   return (
     <>
       {currentWeather ? (
-        <>npm ru
+        <>
+          npm ru
           <Box
             sx={{
               position: "absolute",
@@ -350,7 +352,8 @@ export default function Home() {
                       }}
                     >
                       <Speedometer
-                        windSpeed={currentWeather?.current.wind_kph as number}
+                        windSpeed={50}
+                        // windSpeed={currentWeather?.current.wind_kph as number}
                       />
                     </Box>
                   </Grid>
