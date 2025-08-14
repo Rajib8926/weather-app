@@ -89,6 +89,7 @@ export default function WeatherDrawer({
       onClose={() => setOpen(true)} // Prevent closing
       snapPoints={[0.9, 0.2]}
       initialSnap={1}
+      style={{ zIndex: "5" }}
     >
       <Sheet.Container
         style={{
@@ -105,7 +106,7 @@ export default function WeatherDrawer({
           />
         </Sheet.Content>
       </Sheet.Container>
-      <Sheet.Backdrop style={{ backgroundColor: "transparent" }}/>
+      <Sheet.Backdrop style={{ backgroundColor: "transparent" }} />
     </Sheet>
   );
 }

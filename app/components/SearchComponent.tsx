@@ -71,15 +71,14 @@ export default function SearchComponent({
       sx={{
         zIndex: "10",
         cursor: "auto",
-
         background: "white",
       }}
       open={isOpen}
     >
       <Box
         sx={{
-          height: "100%",
-          width: "100%",
+          height: "100vh",
+          width: "100vw",
           paddingTop: "30px",
           display: "flex",
           flexDirection: "column",
