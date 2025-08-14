@@ -24,6 +24,7 @@ import {
   getCurrentWeather,
   timeCalculate,
 } from "./functions/getCurrentWeather";
+import Loader from "./components/Loader";
 export default function Home() {
   const [hourlyForecast, setHourlyForecast] = useState<
     WeatherHourDataType[] | null
@@ -146,7 +147,6 @@ export default function Home() {
     <>
       {currentWeather ? (
         <>
-          npm ru
           <Box
             sx={{
               position: "absolute",
@@ -531,7 +531,17 @@ export default function Home() {
           </Box>
         </>
       ) : (
-        <div>loading</div>
+        <Box
+          sx={{
+            height: "100vh",
+            width: "100vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Loader />
+        </Box>
       )}
     </>
   );
