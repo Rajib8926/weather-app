@@ -10,44 +10,10 @@ import WeatherInfoDrawer from "./components/WeatherInfoDrawer";
 export default function Home() {
   const [weatherReport, setWeatherReport] =
     useState<WeatherForecastResponse | null>(null);
-  const [forecastRange, setForecastRange] = useState({ start: 0, end: 8 });
+
   const [hourlyForecast, setHourlyForecast] = useState<
     WeatherHourDataType[] | null
   >(null);
-  const gridItemStyle = {
-    background: "white",
-    justifyItems: "center",
-    borderRadius: { md: "30px", xs: "20px" },
-    alignContent: "center",
-    padding: "20px 30px",
-    // backdropFilter: "blur(15px)",
-  };
-  const weatherIconConStyle = {
-    width: "30px",
-    height: "25px",
-    backgroundColor: "primary.main",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "5px",
-  };
-  function forecastRangeHandler(type: "next" | "previous") {
-    if (type === "next") {
-      if (forecastRange.end < 24) {
-        setForecastRange({
-          start: forecastRange.start + 8,
-          end: forecastRange.end + 8,
-        });
-      }
-    } else if (type === "previous") {
-      if (forecastRange.start > 0) {
-        setForecastRange({
-          start: forecastRange.start - 8,
-          end: forecastRange.end - 8,
-        });
-      }
-    }
-  }
 
   return (
     <>
