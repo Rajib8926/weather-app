@@ -22,6 +22,8 @@ export default function CurrentWeather({
   timeAndDate,
   decreaseIndex,
   increaseIndex,
+  isBackDropOpen,
+  setIsBackDropOpen,
 }: {
   currentWeather: WeatherForecastResponse;
   addedLocatons: {
@@ -48,6 +50,8 @@ export default function CurrentWeather({
     | undefined;
   decreaseIndex: () => void;
   increaseIndex: () => void;
+  isBackDropOpen: boolean;
+  setIsBackDropOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const [isDeleteVerificationOpen, setIsDeleteVerificationOpen] =
     useState<boolean>(false);
@@ -55,7 +59,7 @@ export default function CurrentWeather({
     setIsDeleteVerificationOpen(!isDeleteVerificationOpen);
   };
   const textColor = "white";
-  const [isBackDropOpen, setIsBackDropOpen] = useState(false);
+
   const backdropClickHandler = () => {
     setIsBackDropOpen(!isBackDropOpen);
   };

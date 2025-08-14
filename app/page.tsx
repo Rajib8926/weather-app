@@ -101,7 +101,7 @@ export default function Home() {
       addedLocatons.filter((data, index) => index !== currentLocationIndex)
     );
   };
-
+  const [isBackDropOpen, setIsBackDropOpen] = useState(false);
   useEffect(
     function () {
       getCurrentWeather(addedLocatons[currentLocationIndex]).then((data) => {
@@ -193,12 +193,15 @@ export default function Home() {
                 setAddedLocation={setAddedLocation}
                 setCurrentLocationIndex={setCurrentLocationIndex}
                 timeAndDate={timeAndDate}
+                isBackDropOpen={isBackDropOpen}
+                setIsBackDropOpen={setIsBackDropOpen}
               />
             </Box>
 
             <WeatherInfoDrawer
               weatherReport={currentWeather}
               hourlyForecast={hourlyForecast}
+              display={isBackDropOpen ? "none" : "block"}
             />
 
             <Box
