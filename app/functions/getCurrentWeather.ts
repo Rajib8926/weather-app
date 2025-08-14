@@ -4,7 +4,7 @@ export async function getCurrentWeather(
   location: { lat: number; lon: number } | null = null
 ) {
   let currentWeather: WeatherForecastResponse | null = null;
-  const apiKey = process.env.NEXT_PUBLIC_WEATHERAPI_KEY;
+  const apiKey = "f4a8cb380ebe45d1897171518251607";
   if (location) {
     const ref = await fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location.lat},${location.lon}&days=2&aqi=yes`
