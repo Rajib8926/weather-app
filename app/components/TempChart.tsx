@@ -1,7 +1,6 @@
 // LineChart.js
 "use client";
 import React, { useEffect, useState } from "react";
-import { Context } from "chartjs-plugin-datalabels";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +11,7 @@ import {
   Tooltip,
   Legend,
   ChartData,
-  TooltipItem,
+  ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
@@ -20,8 +19,7 @@ import muiTheme from "../theme/muiTheme";
 import { WeatherHourDataType } from "../type";
 
 import { timeCalculate } from "../functions/getCurrentWeather";
-
-import { ChartOptions } from "chart.js";
+import { Context } from "vm";
 // Register components
 ChartJS.defaults.font.family = "Roboto";
 ChartJS.register(
@@ -34,30 +32,7 @@ ChartJS.register(
   Legend,
   ChartDataLabels
 );
-interface dataType {
-  labels: string[] | undefined;
-  datasets: {
-    data: number[] | undefined;
-    label: string;
-    borderColor: string;
-    backgroundColor: string;
-    tension: number;
-    pointRadius: number;
-    pointHoverRadius: number;
-    datalabels: {
-      display: boolean;
-      align: string;
-      anchor: string;
-      formatter: (value: number, context: Context) => string;
-      font: {
-        size: number;
-        weight: string;
-        finally: string;
-      };
-      color: string;
-    };
-  }[];
-}
+
 const LineChart = ({
   hourlyForecast,
   forecastRange,
@@ -108,7 +83,7 @@ const LineChart = ({
     [hourlyForecast]
   );
 
-  const data: dataType = {
+  const data = {
     labels: chartInfo?.time?.slice(forecastRange.start, forecastRange.end),
     datasets: [
       {
@@ -190,12 +165,7 @@ const LineChart = ({
     },
   };
 
-  return (
-    <Line
-      data={data as ChartData<"line", number[] | undefined, string>}
-      options={options as ChartOptions<"line">}
-    />
-  );
+  return <Line data={data as ChartData<'line'>} options={options as ChartOptions<'line'>} />;
 };
 
 export default LineChart;

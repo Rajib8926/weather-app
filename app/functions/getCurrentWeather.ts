@@ -27,7 +27,7 @@ export async function getCurrentWeather(
         currentWeather = data;
       },
       (err) => {
-        // console.error("Geolocation error:", err);
+        console.error("Geolocation error:", err);
       }
     );
     if (lat == null && lon == null) {

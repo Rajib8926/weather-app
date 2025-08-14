@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${roboto.className}`}>
-      <body
-        style={{ position: "relative", height: "100vh", overflow: "hidden" }}
-      >
+      <body style={{ position: "relative", height: "100vh", overflow: "hidden"}}>
         <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>

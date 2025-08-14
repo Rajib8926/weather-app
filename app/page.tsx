@@ -1,6 +1,19 @@
 "use client";
-import { Box } from "@mui/material";
-
+import { Box, Button, Grid, Typography } from "@mui/material";
+import LineChart from "./components/TempChart";
+import Speedometer from "./components/Speedomiter";
+import Humidity from "./components/Humidity";
+import UVIndex from "./components/UVIndex";
+import FeelsLike from "./components/FeelsLike";
+import AirQuality from "./components/AirQuality";
+import ChancesOfRain from "./components/ChancesOfRain";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import AirIcon from "@mui/icons-material/Air";
+import SunnyIcon from "@mui/icons-material/Sunny";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
+import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import MasksIcon from "@mui/icons-material/Masks";
 import CurrentWeather from "./components/CurrentWeather";
 import { useState } from "react";
 import { WeatherForecastResponse, WeatherHourDataType } from "./type";
@@ -14,7 +27,42 @@ export default function Home() {
   const [hourlyForecast, setHourlyForecast] = useState<
     WeatherHourDataType[] | null
   >(null);
+  const gridItemStyle = {
+    background: "white",
+    justifyItems: "center",
+    borderRadius: { md: "30px", xs: "20px" },
+    alignContent: "center",
+    padding: "20px 30px",
+    // backdropFilter: "blur(15px)",
+  };
+  const weatherIconConStyle = {
+    width: "30px",
+    height: "25px",
+    backgroundColor: "primary.main",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "5px",
+  };
+  const [forecastRange, setForecastRange] = useState({ start: 0, end: 8 });
 
+  function forecastRangeHandler(type: "next" | "previous") {
+    if (type === "next") {
+      if (forecastRange.end < 24) {
+        setForecastRange({
+          start: forecastRange.start + 8,
+          end: forecastRange.end + 8,
+        });
+      }
+    } else if (type === "previous") {
+      if (forecastRange.start > 0) {
+        setForecastRange({
+          start: forecastRange.start - 8,
+          end: forecastRange.end - 8,
+        });
+      }
+    }
+  }
   return (
     <>
       <Box
@@ -57,23 +105,31 @@ export default function Home() {
             setHourlyForecast={setHourlyForecast}
           />
         </Box>
-        <Box sx={{ display: { md: "inline", xs: "none" } }}>
+        {/* <Box
+          sx={{
+            width: { xl: "75%", md: "80%", xs: "100vw" },
+            height: "100vh",
+            position: { md: "static", xs: "absolute" },
+
+            bottom: "-70vh",
+          }}
+        >
           <WeatherInfo
             weatherReport={weatherReport}
             hourlyForecast={hourlyForecast}
           />
-        </Box>
-        <WeatherInfoDrawer
+        </Box> */}
+        {/* <WeatherInfoDrawer
           weatherReport={weatherReport}
           hourlyForecast={hourlyForecast}
-        />
-        {/* <Box
+        /> */}
+        <Box
           sx={{
             background: "#ffffff98",
             height: "100vh",
             width: { xl: "75%", md: "80%", xs: "100vw" },
             backdropFilter: "blur(2px)",
-            display: "flex",
+            display: { md: "flex", xs: "none" },
             flexDirection: "column",
             padding: {
               xl: "4rem 7rem",
@@ -91,18 +147,6 @@ export default function Home() {
             bottom: "-70vh",
           }}
         >
-          <Box
-            sx={{
-              width: "50px",
-              height: "7px",
-              borderRadius: "5px",
-              background: "#42424242",
-              position: "absolute",
-              top: "11px",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          ></Box>
           <Typography
             variant="h1"
             sx={{
@@ -123,7 +167,7 @@ export default function Home() {
               marginTop: "5px",
             }}
           >
-            Check out today's weather information
+            {" Check out today's weather information"}
           </Typography>
           <Box
             sx={{
@@ -194,7 +238,7 @@ export default function Home() {
             }}
           >
             <Typography sx={{ fontSize: { lg: "17px", xs: "15px" } }}>
-              More details of today's weather
+              {"More details of today's weather"}
             </Typography>
             <Grid
               container
@@ -393,7 +437,7 @@ export default function Home() {
               </Grid>
             </Grid>
           </Box>
-        </Box> */}
+        </Box>
       </Box>
     </>
   );

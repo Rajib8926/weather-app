@@ -1,4 +1,3 @@
-
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import LineChart from "./TempChart";
@@ -62,15 +61,14 @@ export default function WeatherInfo({
   return (
     <Box
       sx={{
-        background: { md: "#ffffff98", xs: "transparent" },
+        // background: "#ffffff98",
         height: "100vh",
-        width: { xl: "75vw", md: "80vw", xs: "100vw" },
-        backdropFilter: "blur(4px)",
+        width: "100%",
+        backdropFilter: "blur(2px)",
         display: "flex",
         flexDirection: "column",
         padding: {
           xl: "4rem 7rem",
-          md: "3rem 3rem",
           sm: "0rem 3rem",
           xs: "0rem 1rem 11vh",
         },
@@ -105,7 +103,7 @@ export default function WeatherInfo({
           marginTop: "5px",
         }}
       >
-        {"Check out today's weather information"}
+        {" Check out today's weather information"}
       </Typography>
       <Box
         sx={{
@@ -176,7 +174,7 @@ export default function WeatherInfo({
         }}
       >
         <Typography sx={{ fontSize: { lg: "17px", xs: "15px" } }}>
-         {" More details of today's weather"}
+          {" More details of today's weather"}
         </Typography>
         <Grid
           container
