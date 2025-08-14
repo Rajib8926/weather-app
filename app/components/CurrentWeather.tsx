@@ -1,15 +1,11 @@
 "use client";
 import { Box, Typography } from "@mui/material";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import NearMeIcon from "@mui/icons-material/NearMe";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import {
-  dateCalculate,
-  getCurrentWeather,
-  timeCalculate,
-} from "../functions/getCurrentWeather";
-import { WeatherForecastResponse, WeatherHourDataType } from "../type";
+
+import { WeatherForecastResponse } from "../type";
 import { getWeatherIcons } from "../functions/weatherIcon";
 import { FiChevronRight } from "react-icons/fi";
 import SearchComponent from "./SearchComponent";
@@ -17,97 +13,128 @@ import DeleteLocationVerification from "./DeleteLocationVerification";
 import { getWeatherImg } from "../functions/weatherImg";
 
 export default function CurrentWeather({
-  setWeatherReport,
-  setHourlyForecast,
+  currentWeather,
+  addedLocatons,
+  setAddedLocation,
+  deleteLocationHandler,
+  setCurrentLocationIndex,
+  currentLocationIndex,
+  timeAndDate,
+  decreaseIndex,
+  increaseIndex,
 }: {
-  setWeatherReport: Dispatch<SetStateAction<WeatherForecastResponse | null>>;
-  setHourlyForecast: Dispatch<SetStateAction<WeatherHourDataType[] | null>>;
+  currentWeather: WeatherForecastResponse;
+  addedLocatons: {
+    lat: number;
+    lon: number;
+  }[];
+  setAddedLocation: Dispatch<
+    SetStateAction<
+      {
+        lat: number;
+        lon: number;
+      }[]
+    >
+  >;
+  deleteLocationHandler: () => void;
+  setCurrentLocationIndex: Dispatch<SetStateAction<number>>;
+  currentLocationIndex: number;
+  timeAndDate:
+    | {
+        time: string;
+        date: string;
+      }
+    | null
+    | undefined;
+  decreaseIndex: () => void;
+  increaseIndex: () => void;
 }) {
-  const [addedLocatons, setAddedLocation] = useState<
-    { lat: number; lon: number }[]
-  >([
-    { lat: 27.036007, lon: 88.262672 },
-    { lat: 19.07609, lon: 72.877426 },
-    { lat: 28.6448, lon: 77.216721 },
-  ]);
   const [isDeleteVerificationOpen, setIsDeleteVerificationOpen] =
     useState<boolean>(false);
-  const textColor = "white";
-  const switchLabel = { inputProps: { "aria-label": "Switch demo" } };
-  const [currentWeather, setCurrentWeather] =
-    useState<WeatherForecastResponse | null>(null);
-  const [isBackDropOpen, setIsBackDropOpen] = useState(false);
-  const [timeAndDate, setTimeAndDate] = useState<{
-    time: string;
-    date: string;
-  } | null>();
-  const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
-  const increaseIndex = () => {
-    console.log("inClick");
-
-    setCurrentLocationIndex(
-      addedLocatons.length - 1 > currentLocationIndex
-        ? currentLocationIndex + 1
-        : 0
-    );
-  };
-  const decreaseIndex = () => {
-    setCurrentLocationIndex(
-      0 === currentLocationIndex
-        ? addedLocatons.length - 1
-        : currentLocationIndex - 1
-    );
-  };
-  const deleteLocationHandler = () => {
-    setAddedLocation(
-      addedLocatons.filter((data, index) => index !== currentLocationIndex)
-    );
-  };
-  const backdropClickHandler = () => {
-    setIsBackDropOpen(!isBackDropOpen);
-  };
   const deleteVerificationHandler = () => {
     setIsDeleteVerificationOpen(!isDeleteVerificationOpen);
   };
-  useEffect(
-    function () {
-      getCurrentWeather(addedLocatons[currentLocationIndex]).then((data) => {
-        setWeatherReport(data as WeatherForecastResponse);
-        setCurrentWeather(data as WeatherForecastResponse);
-        setTimeAndDate({
-          time: timeCalculate(data?.location.localtime_epoch as number),
-          date: dateCalculate(data?.location.localtime),
-        });
-        console.log(data);
-        function getNext24HoursForecast(forecastData: WeatherForecastResponse) {
-          const currentEpoch = forecastData.current.last_updated_epoch;
-          const currentHour = new Date(currentEpoch * 1000).getHours();
+  const textColor = "white";
+  const [isBackDropOpen, setIsBackDropOpen] = useState(false);
+  const backdropClickHandler = () => {
+    setIsBackDropOpen(!isBackDropOpen);
+  };
+  // const [addedLocatons, setAddedLocation] = useState<
+  //   { lat: number; lon: number }[]
+  // >([
+  //   { lat: 27.036007, lon: 88.262672 },
+  //   { lat: 19.07609, lon: 72.877426 },
+  //   { lat: 28.6448, lon: 77.216721 },
+  // ]);
+  // const switchLabel = { inputProps: { "aria-label": "Switch demo" } };
+  // const [currentWeather, setCurrentWeather] =
+  //   useState<WeatherForecastResponse | null>(null);
+  // const [timeAndDate, setTimeAndDate] = useState<{
+  //   time: string;
+  //   date: string;
+  // } | null>();
+  // const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
+  // const increaseIndex = () => {
+  //   console.log("inClick");
 
-          const todayHours = forecastData.forecast.forecastday[0].hour;
-          const tomorrowHours =
-            forecastData.forecast.forecastday[1]?.hour || [];
+  //   setCurrentLocationIndex(
+  //     addedLocatons.length - 1 > currentLocationIndex
+  //       ? currentLocationIndex + 1
+  //       : 0
+  //   );
+  // };
+  // const decreaseIndex = () => {
+  //   setCurrentLocationIndex(
+  //     0 === currentLocationIndex
+  //       ? addedLocatons.length - 1
+  //       : currentLocationIndex - 1
+  //   );
+  // };
+  // const deleteLocationHandler = () => {
+  //   setAddedLocation(
+  //     addedLocatons.filter((data, index) => index !== currentLocationIndex)
+  //   );
+  // };
 
-          // Merge both day's hourly data
-          const allHours = [...todayHours, ...tomorrowHours];
+  // useEffect(
+  //   function () {
+  //     getCurrentWeather(addedLocatons[currentLocationIndex]).then((data) => {
+  //       setWeatherReport(data as WeatherForecastResponse);
+  //       setCurrentWeather(data as WeatherForecastResponse);
+  //       setTimeAndDate({
+  //         time: timeCalculate(data?.location.localtime_epoch as number),
+  //         date: dateCalculate(data?.location.localtime),
+  //       });
+  //       console.log(data);
+  //       function getNext24HoursForecast(forecastData: WeatherForecastResponse) {
+  //         const currentEpoch = forecastData.current.last_updated_epoch;
+  //         const currentHour = new Date(currentEpoch * 1000).getHours();
 
-          // Get the index of the current hour in merged data
-          const startIndex = allHours.findIndex(
-            (hour) => hour.time_epoch >= currentEpoch
-          );
+  //         const todayHours = forecastData.forecast.forecastday[0].hour;
+  //         const tomorrowHours =
+  //           forecastData.forecast.forecastday[1]?.hour || [];
 
-          // Get next 24 hours from current time
-          setHourlyForecast(
-            allHours.slice(startIndex, startIndex + 24) as WeatherHourDataType[]
-          );
-          console.log(allHours.slice(startIndex, startIndex + 24));
+  //         // Merge both day's hourly data
+  //         const allHours = [...todayHours, ...tomorrowHours];
 
-          return allHours.slice(startIndex, startIndex + 24);
-        }
-        getNext24HoursForecast(data as WeatherForecastResponse);
-      });
-    },
-    [currentLocationIndex, addedLocatons]
-  );
+  //         // Get the index of the current hour in merged data
+  //         const startIndex = allHours.findIndex(
+  //           (hour) => hour.time_epoch >= currentEpoch
+  //         );
+
+  //         // Get next 24 hours from current time
+  //         setHourlyForecast(
+  //           allHours.slice(startIndex, startIndex + 24) as WeatherHourDataType[]
+  //         );
+  //         console.log(allHours.slice(startIndex, startIndex + 24));
+
+  //         return allHours.slice(startIndex, startIndex + 24);
+  //       }
+  //       getNext24HoursForecast(data as WeatherForecastResponse);
+  //     });
+  //   },
+  //   [currentLocationIndex, addedLocatons]
+  // );
 
   return (
     <>
