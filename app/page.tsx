@@ -18,8 +18,8 @@ import CurrentWeather from "./components/CurrentWeather";
 import { useState } from "react";
 import { WeatherForecastResponse, WeatherHourDataType } from "./type";
 import "react-spring-bottom-sheet/dist/style.css";
-import WeatherInfo from "./components/WeatherInfo";
-import WeatherInfoDrawer from "./components/WeatherInfoDrawer";
+// import WeatherInfo from "./components/WeatherInfo";
+// import WeatherInfoDrawer from "./components/WeatherInfoDrawer";
 export default function Home() {
   const [weatherReport, setWeatherReport] =
     useState<WeatherForecastResponse | null>(null);
