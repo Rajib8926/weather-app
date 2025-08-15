@@ -72,16 +72,19 @@ export default function Home() {
     { lat: 19.07609, lon: 72.877426 },
     { lat: 28.6448, lon: 77.216721 },
   ]);
-  const switchLabel = { inputProps: { "aria-label": "Switch demo" } };
+  
+  
+
   const [currentWeather, setCurrentWeather] =
     useState<WeatherForecastResponse | null>(null);
   const [timeAndDate, setTimeAndDate] = useState<{
     time: string;
     date: string;
   } | null>();
+  
   const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
   const increaseIndex = () => {
-    console.log("inClick");
+  
 
     setCurrentLocationIndex(
       addedLocatons.length - 1 > currentLocationIndex
@@ -102,6 +105,7 @@ export default function Home() {
     );
   };
   const [isBackDropOpen, setIsBackDropOpen] = useState(false);
+
   useEffect(
     function () {
       getCurrentWeather(addedLocatons[currentLocationIndex]).then((data) => {
@@ -111,7 +115,7 @@ export default function Home() {
           time: timeCalculate(data?.location.localtime_epoch as number),
           date: dateCalculate(data?.location.localtime),
         });
-        console.log(data);
+        
         function getNext24HoursForecast(forecastData: WeatherForecastResponse) {
           const currentEpoch = forecastData.current.last_updated_epoch;
           const currentHour = new Date(currentEpoch * 1000).getHours();
@@ -132,7 +136,7 @@ export default function Home() {
           setHourlyForecast(
             allHours.slice(startIndex, startIndex + 24) as WeatherHourDataType[]
           );
-          console.log(allHours.slice(startIndex, startIndex + 24));
+         
 
           return allHours.slice(startIndex, startIndex + 24);
         }
@@ -141,7 +145,7 @@ export default function Home() {
     },
     [currentLocationIndex, addedLocatons]
   );
-  console.log(currentWeather);
+ 
 
   return (
     <>

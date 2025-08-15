@@ -46,7 +46,7 @@ export default function SearchComponent({
       );
       const locationData = await locationRes.json();
       if (locationData !== 0) {
-        console.log(locationData);
+       
         setSearchResult(locationData);
       } else {
         setSearchResult(null);

@@ -63,82 +63,7 @@ export default function CurrentWeather({
   const backdropClickHandler = () => {
     setIsBackDropOpen(!isBackDropOpen);
   };
-  // const [addedLocatons, setAddedLocation] = useState<
-  //   { lat: number; lon: number }[]
-  // >([
-  //   { lat: 27.036007, lon: 88.262672 },
-  //   { lat: 19.07609, lon: 72.877426 },
-  //   { lat: 28.6448, lon: 77.216721 },
-  // ]);
-  // const switchLabel = { inputProps: { "aria-label": "Switch demo" } };
-  // const [currentWeather, setCurrentWeather] =
-  //   useState<WeatherForecastResponse | null>(null);
-  // const [timeAndDate, setTimeAndDate] = useState<{
-  //   time: string;
-  //   date: string;
-  // } | null>();
-  // const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
-  // const increaseIndex = () => {
-  //   console.log("inClick");
 
-  //   setCurrentLocationIndex(
-  //     addedLocatons.length - 1 > currentLocationIndex
-  //       ? currentLocationIndex + 1
-  //       : 0
-  //   );
-  // };
-  // const decreaseIndex = () => {
-  //   setCurrentLocationIndex(
-  //     0 === currentLocationIndex
-  //       ? addedLocatons.length - 1
-  //       : currentLocationIndex - 1
-  //   );
-  // };
-  // const deleteLocationHandler = () => {
-  //   setAddedLocation(
-  //     addedLocatons.filter((data, index) => index !== currentLocationIndex)
-  //   );
-  // };
-
-  // useEffect(
-  //   function () {
-  //     getCurrentWeather(addedLocatons[currentLocationIndex]).then((data) => {
-  //       setWeatherReport(data as WeatherForecastResponse);
-  //       setCurrentWeather(data as WeatherForecastResponse);
-  //       setTimeAndDate({
-  //         time: timeCalculate(data?.location.localtime_epoch as number),
-  //         date: dateCalculate(data?.location.localtime),
-  //       });
-  //       console.log(data);
-  //       function getNext24HoursForecast(forecastData: WeatherForecastResponse) {
-  //         const currentEpoch = forecastData.current.last_updated_epoch;
-  //         const currentHour = new Date(currentEpoch * 1000).getHours();
-
-  //         const todayHours = forecastData.forecast.forecastday[0].hour;
-  //         const tomorrowHours =
-  //           forecastData.forecast.forecastday[1]?.hour || [];
-
-  //         // Merge both day's hourly data
-  //         const allHours = [...todayHours, ...tomorrowHours];
-
-  //         // Get the index of the current hour in merged data
-  //         const startIndex = allHours.findIndex(
-  //           (hour) => hour.time_epoch >= currentEpoch
-  //         );
-
-  //         // Get next 24 hours from current time
-  //         setHourlyForecast(
-  //           allHours.slice(startIndex, startIndex + 24) as WeatherHourDataType[]
-  //         );
-  //         console.log(allHours.slice(startIndex, startIndex + 24));
-
-  //         return allHours.slice(startIndex, startIndex + 24);
-  //       }
-  //       getNext24HoursForecast(data as WeatherForecastResponse);
-  //     });
-  //   },
-  //   [currentLocationIndex, addedLocatons]
-  // );
 
   return (
     <>
@@ -333,14 +258,14 @@ export default function CurrentWeather({
                 >
                   {
                     getWeatherIcons(
-                      currentWeather?.current.condition.code as number,
+                      currentWeather.current.condition.code as number,
                       currentWeather.current.is_day
                     )?.text
                   }
                 </Typography>
                 {
                   getWeatherIcons(
-                    currentWeather?.current.condition.code as number,
+                    currentWeather.current.condition.code as number,
                     currentWeather.current.is_day
                   )?.icon
                 }
@@ -359,7 +284,7 @@ export default function CurrentWeather({
                 height: { xl: "360px", xs: "300px" },
                 backgroundImage: `url(${getWeatherImg(
                   currentWeather?.current.condition.code as number,
-                  0
+                  currentWeather?.current.is_day
                 )}.png)`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",

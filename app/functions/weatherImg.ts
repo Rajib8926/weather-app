@@ -49,7 +49,7 @@ export function getWeatherImg(code: number, isDay: number): string {
     1273: "rain",
   };
 
-  console.log(mapping[code] || isDay === 0 ? "moon" : "sunny");
+
 
   return mapping[code] || (isDay === 0 ? "moon" : "sunny");
 }

@@ -66,5 +66,5 @@ export function dateCalculate(rawDate = "2025-08-01 15:45") {
     day: "numeric",
   });
   return formattedDate;
-  console.log(formattedDate); // ➤ "1, August"
+  
 }
