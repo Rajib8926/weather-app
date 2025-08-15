@@ -31,7 +31,7 @@ export default function WeatherDrawer({
   return (
     <Sheet
       isOpen={isOpen}
-      onClose={() => setOpen(true)} // Prevent closing
+      onClose={() => setOpen(true)}
       snapPoints={[0.9, 0.2]}
       initialSnap={1}
       style={{ display: display }}

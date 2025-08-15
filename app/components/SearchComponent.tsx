@@ -79,7 +79,7 @@ export default function SearchComponent({
         sx={{
           height: "100vh",
           width: "100vw",
-          paddingTop: {md:"30px",xs:"30px"},
+          paddingTop: { md: "30px", xs: "30px" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
